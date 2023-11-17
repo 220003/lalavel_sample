@@ -6,36 +6,20 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+// HomeController
+Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('/search', [HomeController::class, 'search'])->name('search');
 
 Route::get('/', function () {
-    // resources/views/welcome.blade.php ビューが表示
     return view('welcome');
 });
 
-// ルーティング後は、コントローラーに任せる
-// HomeController
-Route::get('/about', [HomeController::class, 'about']);
-Route::get('/search', [HomeController::class, 'search']);
 
 // ItemController
-Route::get('/item/{id}', [ItemController::class, 'show']);
-Route::get('/dp/{id}', [ItemController::class, 'show']);
-
-// URLから直接アクセスできない
-// Route::post('/hello', function () {
-//     $message = "こんにちは";
-//     return $message;
-// });
+Route::get('/item/', [ItemController::class, 'index'])->name('item.index');
+Route::get('/item/create', [ItemController::class,'create'])->name('item.create');
+Route::post('/item/store', [ItemController::class,'store'])->name('item.store');
+Route::get('/item/{id}', [ItemController::class, 'show'])->name('item.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -47,4 +31,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
