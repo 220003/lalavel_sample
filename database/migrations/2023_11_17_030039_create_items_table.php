@@ -16,19 +16,6 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name', 255);
             $table->integer('price');
-
-            //Note:
-            // id (Primary Key)
-            // created_at, updated_at
-            // name (varchar 255)
-            // price (int)
-
-            // SQL
-            // CREATE TABLE {
-            //     id PRIMARY KEY,
-            //     created_at TIMESTAMP DEFAULT ...
-            //     ....
-            // }
         });
     }
 

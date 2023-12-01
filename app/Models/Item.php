@@ -8,13 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name',
         'price',
     ];
-    protected $gyarded = [
+
+    protected $guarded = [
         'id',
         'created_at',
-        'update_at',
+        'updated_at',
     ];
+
 }
