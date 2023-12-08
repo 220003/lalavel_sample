@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ItemRequest;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -34,12 +35,13 @@ class ItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ItemRequest $request)
     {
         // dd($request);
         // dd($request->all());
         //Requestからデータを取得
         $data = $request->all();
+       
         //データベースに保存
         // INSERT INTO items (name, price) VALUES (xxxx, xxxx);
         Item::create($data);
@@ -88,7 +90,7 @@ class ItemController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(ItemRequest $request, int $id)
     {
         $data = $request->all();
         // dd($data);
