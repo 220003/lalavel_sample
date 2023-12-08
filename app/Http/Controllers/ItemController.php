@@ -12,24 +12,26 @@ class ItemController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // TODO: データをすべて取得
-        // SELECT * FROM items;
-        $items = Item::get();
-        $data['items'] = $items;
+        $order_column = ($request->order_column) ? $request->order_column : 'id';
+        $order_value = ($request->order_value) ? $request->order_value : 'asc';
+        if ($item_name = $request->item_name) {
+            //SELECT * FROM items WHERE name LIKE '%xxxx%' ORDER BY XXX;
+            $items = Item::where('name', 'LIKE', "%{$item_name}%")
+                ->orderBy($order_column, $order_value)
+                ->get();
+        } else {
+            //SELECT * FROM items; 
+            $items = Item::orderBy($order_column, $order_value)->get();
+        }
 
-        // views/item/index.blade.php
+        $data = [
+            'items' => $items,
+            'item_name' => $item_name,
+        ];
+        // resources/views/item/index.blade.php に受け渡して表示
         return view('item.index', $data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        // views/item/create.blade.php
-        return view('item.create');
     }
 
     /**
