@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
 {
@@ -95,10 +96,12 @@ class ItemController extends Controller
         // 1.
         // unset($data['_token']);
         // Item::where('id', $id)->update($data);
+        //Query Builder
+        DB::table('items')->where('id', $id)->update($data);
         // 2.
         // SELECT * FROM items WHERE id = xx;
         // UPDATE items SET price = xxx WHERE id = xx;
-        Item::find($id)->fill($data)->save();
+        // Item::find($id)->fill($data)->save();
 
         //リダイレクト
         return redirect(route('item.edit', $id));
@@ -107,9 +110,11 @@ class ItemController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        item::destroy($id);
+        // DELETE FROM items WHERE id = xx;
+        Item::destroy($id);
+        // 一覧画面にリダイレクト
         return redirect(route('item.index'));
     }
 }
